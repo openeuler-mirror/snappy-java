@@ -1,7 +1,7 @@
 %global debug_package %nil
 Name:                snappy-java
 Version:             1.1.2.4
-Release:             1
+Release:             2
 Summary:             Fast compressor/decompresser
 License:             ASL 2.0
 URL:                 http://xerial.org/snappy-java/
@@ -9,6 +9,7 @@ Source0:             https://github.com/xerial/snappy-java/archive/%{version}.ta
 Source1:             https://repo1.maven.org/maven2/org/xerial/snappy/%{name}/%{version}/%{name}-%{version}.pom
 Patch0:              snappy-java-1.1.2-build.patch
 Patch1:              snappy-java-1.1.2.4-lsnappy.patch
+Patch2:              fix-cxx.patch
 
 BuildRequires:       make gcc-c++ libstdc++-static snappy-devel
 BuildRequires:       maven-local mvn(com.sun:tools) mvn(org.apache.felix:maven-bundle-plugin)
@@ -36,6 +37,7 @@ find -name "*.dll" -print -delete
 find -name "*.so" -print -delete
 find -name "*.a" -print -delete
 find -name "*.h" -print -delete
+%patch2 -p1
 %patch0 -p1
 %patch1 -p1
 cp %{SOURCE1} pom.xml
@@ -119,5 +121,8 @@ export CXXFLAGS
 %license LICENSE NOTICE
 
 %changelog
+* Thu Apr 27 2023 yoo <sunyuechi@iscas.ac.cn> - 1.1.2.4-2
+- support specifying cxx
+
 * Tue Jul 28 2020 leiju <leiju4@huawei.com> - 1.1.2.4-1
 - Package init
